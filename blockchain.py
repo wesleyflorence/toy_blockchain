@@ -5,6 +5,7 @@ from time import time
 from textwrap import dedent
 from uuid import uuid4
 from urllib.parse import urlparse
+import requests
 from flask import Flask, jsonify, request
 
 """
@@ -63,7 +64,13 @@ class Blockchain:
 
     def register_node(self, address):
         parsed_url = urlparse(address)
-        self.nodes.add(parsed_url.netloc)
+        if parsed_url.netloc:
+            self.nodes.add(parsed_url.netloc)
+        elif parsed_url.path:
+            # Accepts an URL without scheme like '192.168.0.5:5000'.
+            self.nodes.add(parsed_url.path)
+        else:
+            raise ValueError('Invalid URL')
 
     def valid_chain(self, chain):
         last_block = chain[0]
@@ -91,7 +98,7 @@ class Blockchain:
         max_length = len(self.chain)
 
         for node in neighbors:
-            response = response.get(f'http://{node}/chain')
+            response = requests.get(f'http://{node}/chain')
 
             if response.status_code == 200:
                 length = response.json()['length']
