@@ -34,5 +34,5 @@ To register our original node make a post request:
 ```
 
 __Consensus__  
-Now make a GET request to http:localhost:8080/nodes/resolve to acheive consensus.  
-Check to make sure at http:localhot:5000/chain
+Now make a GET request to http://localhost:8080/nodes/resolve to acheive consensus.  
+Check to make sure at http://localhost:5000/chain
