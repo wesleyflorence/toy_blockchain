@@ -1,5 +1,6 @@
 import hashlib
 import json
+import sys
 from time import time
 from textwrap import dedent
 from uuid import uuid4
@@ -156,7 +157,7 @@ def full_chain():
     }
     return jsonify(response), 200
 
-@app.route('/nodes/register', method=['POST'])
+@app.route('/nodes/register', methods=['POST'])
 def register_nodes():
     values = request.get_json()
 
@@ -174,7 +175,7 @@ def register_nodes():
     }
     return jsonify(response), 201
 
-@app.route('/nodes/resolve', method=['GET'])
+@app.route('/nodes/resolve', methods=['GET'])
 def consensus():
     replaced = blockchain.resolve_conflicts()
 
@@ -193,4 +194,7 @@ def consensus():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    port = 5000
+    if len(sys.argv) == 2:
+        port = sys.argv[1]
+    app.run(host='0.0.0.0', port=port)
