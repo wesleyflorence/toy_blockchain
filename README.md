@@ -21,8 +21,8 @@ Add a new transaction with a post request:
 ```
 
 __Register a New Node__  
-Start a new node on a different port or on a differnt machine with
-`python3 blockchain.oy <PORT>`.  
+Start a new node on a different port or on a different machine with
+`python3 blockchain.py <PORT>`.  
 For this example we start a new node at http://localhost:8080
 
 
